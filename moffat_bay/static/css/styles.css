@@ -1,0 +1,42 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #17352f;
+  background: #f3f0e8;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; }
+
+.site-header {
+  padding: 1rem 5vw;
+  background: #17352f;
+}
+
+.brand {
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero {
+  min-height: 70vh;
+  display: grid;
+  place-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+}
+
+.eyebrow {
+  color: #8a5a32;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
