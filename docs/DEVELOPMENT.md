@@ -1,16 +1,24 @@
 # Development guide
 
+## Prerequisites
+
+- Python 3.12
+- MySQL Community Server 8.4 LTS for database-backed development
+- Git
+
 ## First-time setup on Windows
 
 ```powershell
-py -m venv .venv
+py -3.12 -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-pip install -r requirements-dev.txt
+python -m pip install -r requirements-dev.txt
 Copy-Item .env.example .env
 ```
 
-Edit `.env` with local MySQL values. Do not commit it.
+Edit `.env` with local MySQL Community Server 8.4 LTS values. Do not commit it.
+
+The current public application can start before MySQL is configured. Database-backed features require a running MySQL server and a configured application database. The repository does not yet define the schema or a migration command.
 
 ## Daily development
 

@@ -1,6 +1,6 @@
 # Database workspace
 
-TD-01 establishes this location but intentionally does not define the schema. TD-02 owns the approved MySQL customer and reservation tables after the ERD is agreed upon.
+TD-01 establishes this location but intentionally does not define the schema. TD-02 owns the approved MySQL customer and reservation tables after the ERD is agreed upon. Database development targets MySQL Community Server 8.4 LTS.
 
 - `migrations/` — ordered, reviewable schema changes
 - `seeds/` — non-sensitive development and test records
