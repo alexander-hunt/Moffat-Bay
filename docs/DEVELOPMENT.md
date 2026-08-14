@@ -18,17 +18,11 @@ Copy-Item .env.example .env
 
 Edit `.env` with local MySQL Community Server 8.4 LTS values. Do not commit it.
 
-The current public application can start before MySQL is configured. Database-backed features require a running MySQL server and a configured application database. The repository does not yet define the schema or a migration command.
+Database-backed features require a running MySQL server and a configured application database. 
 
 ## Daily development
 
-```powershell
-git switch main
-git pull
-git switch -c feature/td-xx-short-description
-.venv\Scripts\Activate.ps1
-flask --app run.py run --debug
-```
+Create a feature or bugfix branch.
 
 Before pushing:
 

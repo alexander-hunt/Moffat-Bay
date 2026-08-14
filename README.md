@@ -4,7 +4,7 @@ Capstone project for a lodge reservation application built with Flask and MySQL.
 
 ## Five-minute setup
 
-This quick path starts the public Flask application and verifies its smoke-test endpoints. It does not require a live database yet because the repository does not define the application schema or migration commands.
+This quick path starts the public Flask application and verifies its smoke-test endpoints.
 
 ### Prerequisites
 
@@ -46,8 +46,6 @@ Install and run MySQL Community Server 8.4 LTS before working on database-backed
 | `MYSQL_PASSWORD` | Your local password |
 
 Set `SECRET_KEY` to a long random local value. Never commit `.env`, passwords, production data, or personal customer information.
-
-The database workspace currently contains placeholders for future migrations and seeds. Do not assume that a database schema or initialization command is available until those files are added.
 
 ## Development checks
 
