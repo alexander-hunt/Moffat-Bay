@@ -8,4 +8,3 @@ from . import public_bp
 @public_bp.get("/")
 def index():
     return render_template("public/index.html")
-

@@ -6,19 +6,34 @@
 - MySQL Community Server 8.4 LTS for database-backed development
 - Git
 
-## First-time setup on Windows
+## First-time setup
 
-```powershell
-py -3.12 -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements-dev.txt
-Copy-Item .env.example .env
+```bash
+python scripts/bootstrap.py
+source .venv/bin/activate
 ```
+
+On Windows, start the script with `py -3.12 scripts/bootstrap.py` and activate with
+`.venv\Scripts\activate`.
+
+The script creates `.venv`, upgrades pip, installs `requirements-dev.txt`, and copies
+`.env.example` to `.env` when that file does not already exist. Re-running it is safe and never
+overwrites an existing `.env`.
 
 Edit `.env` with local MySQL Community Server 8.4 LTS values. Do not commit it.
 
-Database-backed features require a running MySQL server and a configured application database. 
+Database-backed features require a running MySQL server and a configured application database.
+Create the empty database once, then apply migrations and load fictional development data:
+
+```bash
+mysql -u root -p < database/migrations/000_create_database.sql
+flask db upgrade
+flask init-db
+```
+
+`flask init-db` applies any pending Alembic migrations and (re)loads the fixed development
+dataset; it is safe to run again. Use `flask db migrate -m "message"` after changing models in
+`moffat_bay/models.py`, then `flask db upgrade` to apply the new revision.
 
 ## Daily development
 
@@ -26,12 +41,15 @@ Create a feature or bugfix branch.
 
 Before pushing:
 
-```powershell
-ruff check .
-pytest
+```bash
+python scripts/validate.py
 ```
 
-Ruff can automatically fix safe formatting/import issues with `ruff check . --fix`; review all resulting changes before committing.
+The validation gate runs Ruff linting, Ruff formatting verification, and the full pytest suite in that order. It stops at the first failing check.
+
+The automated gate does not require MySQL: it validates the application factory and test-client coverage without live database access. In a configured local database environment, separately run `flask db-ping`, `flask db upgrade`, and `flask init-db` when validating connectivity, migrations, or development seed data.
+
+Ruff can automatically fix safe lint issues with `python -m ruff check . --fix` and formatting drift with `python -m ruff format .`; review all resulting changes before committing.
 
 ## Configuration
 
@@ -46,16 +64,29 @@ Ruff can automatically fix safe formatting/import issues with `ruff check . --fi
 
 Generate a local secret with:
 
-```powershell
-py -c "import secrets; print(secrets.token_hex(32))"
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
 ```
+
+### Local root shortcut (optional)
+
+For solo local development you can connect as MySQL `root` instead of creating a
+least-privilege `moffat_app` user, and keep the root password out of `.env` entirely:
+
+1. Set `MYSQL_ROOT_PASSWORD` in your own OS environment (not in `.env`). On macOS or Linux,
+   export it from your shell profile; in PowerShell, use
+   `[Environment]::SetEnvironmentVariable('MYSQL_ROOT_PASSWORD', '<password>', 'User')`.
+2. In `.env`, set `MYSQL_USER=root` and `MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}`.
+   `python-dotenv` expands `${VAR}` references against your OS environment when loading `.env`.
+3. Run `flask db-ping` to confirm the application can reach MySQL with these values.
 
 ## Architecture boundaries
 
 - `public` owns routes that never require authentication.
 - `auth` owns registration, login, logout, and session behavior.
 - `reservations` owns room selection, calculations, confirmation, persistence, and lookup.
-- Shared configuration stays in `config.py`; shared connection handling stays in `db.py`.
+- Shared configuration stays in `config.py`; shared SQLAlchemy/Migrate setup stays in `db.py`.
+- ORM models live in `moffat_bay/models.py`; database automation CLI commands live in `moffat_bay/cli.py`.
 - Templates extend `base.html` so navigation and accessibility improvements remain consistent.
 
 Blueprints for `auth` and `reservations` should be registered only when those tasks add working routes. Avoid placeholder endpoints that imply incomplete features are available.

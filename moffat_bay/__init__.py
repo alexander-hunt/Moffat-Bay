@@ -2,6 +2,7 @@
 
 from flask import Flask, jsonify
 
+from .cli import register_cli
 from .config import Config
 from .db import init_app as init_db
 
@@ -11,7 +12,9 @@ def create_app(config_object: type[Config] = Config) -> Flask:
     app = Flask(__name__)
     app.config.from_object(config_object)
     init_db(app)
+    register_cli(app)
 
+    from . import models  # noqa: F401 register models with SQLAlchemy metadata
     from .public import public_bp
 
     app.register_blueprint(public_bp)
@@ -21,4 +24,3 @@ def create_app(config_object: type[Config] = Config) -> Flask:
         return jsonify(status="ok", service="moffat-bay")
 
     return app
-

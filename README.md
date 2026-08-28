@@ -12,18 +12,17 @@ This quick path starts the public Flask application and verifies its smoke-test 
 - MySQL Community Server 8.4 LTS for database-backed development
 - Git
 
-### Install and run on Windows
+### Install and run
 
-From the repository root, open PowerShell and run:
+From the repository root, run the bootstrap script with Python 3.12. It creates `.venv`, installs the development dependencies, and copies `.env.example` to `.env` if that file does not already exist:
 
-```powershell
-py -3.12 -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements-dev.txt
-Copy-Item .env.example .env
+```bash
+python scripts/bootstrap.py
+source .venv/bin/activate
 flask --app run.py run --debug
 ```
+
+On Windows, start the script with `py -3.12 scripts/bootstrap.py` and activate with `.venv\Scripts\activate`.
 
 Open `http://127.0.0.1:5000/` in a browser. The page should load as the Moffat Bay Lodge home page. You can also verify the health endpoint at `http://127.0.0.1:5000/health`, which should return:
 
@@ -47,13 +46,14 @@ Install and run MySQL Community Server 8.4 LTS before working on database-backed
 
 Set `SECRET_KEY` to a long random local value. Never commit `.env`, passwords, production data, or personal customer information.
 
+For solo local development, you can instead connect as MySQL `root` and keep the password out of `.env` entirely. See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md#local-root-shortcut-optional) for the root shortcut and the `flask db-ping` connectivity check.
+
 ## Development checks
 
 With `.venv` activated, run:
 
-```powershell
-ruff check .
-pytest
+```bash
+python scripts/validate.py
 ```
 
-See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the full development workflow, configuration details, architecture boundaries, and troubleshooting guidance.
+This checks Ruff linting, Ruff formatting, and the full pytest suite. See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the full development workflow, configuration details, architecture boundaries, and troubleshooting guidance.

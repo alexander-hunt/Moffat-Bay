@@ -24,9 +24,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements-dev.txt
 
-      - name: Lint
-        run: ruff check .
-
-      - name: Test
-        run: pytest
+      - name: Validate application
+        run: python scripts/validate.py
 

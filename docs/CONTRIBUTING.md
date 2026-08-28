@@ -5,7 +5,7 @@
 1. Confirm the Kanban task and acceptance criteria.
 2. Create a branch from an up-to-date `main`.
 3. Make one focused change and add or update tests.
-4. Run `ruff check .` and `pytest`.
+4. Run `python scripts/validate.py`.
 5. Open a pull request and request at least one teammate's review.
 6. Resolve review comments and ensure CI passes before squash merging.
 
