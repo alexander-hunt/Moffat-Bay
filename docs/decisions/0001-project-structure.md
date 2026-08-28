@@ -1,6 +1,6 @@
 # ADR 0001: Flask application factory and feature blueprints
 
-- Status: Accepted for TD-01
+- Status: Superseded by [ADR 0003](0003-sqlalchemy-alembic-persistence.md)
 - Date: 2026-08-13
 - Decision owner: Group B, led by Alexander Hunt
 

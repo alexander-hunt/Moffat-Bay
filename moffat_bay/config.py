@@ -19,3 +19,8 @@ class Config:
     MYSQL_USER = os.getenv("MYSQL_USER", "moffat_app")
     MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
 
+    SQLALCHEMY_DATABASE_URI = (
+        f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+    )
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ENGINE_OPTIONS = {"pool_pre_ping": True}

@@ -1,15 +1,14 @@
-# Database workspace
+# Moffat Bay Lodge SQL integration
 
-TD-01 establishes this location but intentionally does not define the schema. TD-02 owns the approved MySQL customer and reservation tables after the ERD is agreed upon. Database development targets MySQL Community Server 8.4 LTS.
+These files are kept as reference documentation for the approved `CUSTOMER`,
+`ROOM_TYPE`, and `RESERVATION` ERD. The running application no longer executes
+them: schema is managed by Flask-Migrate/Alembic revisions generated from
+`moffat_bay/models.py`, and development data is loaded by the `flask init-db`
+CLI command (see `moffat_bay/seeds.py`). See `docs/DEVELOPMENT.md` for the
+current setup steps, including `scripts/setup_databases.py` for local database
+provisioning.
 
-- `migrations/` — ordered, reviewable schema changes
-- `seeds/` — non-sensitive development and test records
-
-Rules:
-
-- Never commit database passwords, production data, or personal customer information.
-- Use lowercase `snake_case` table and column names.
-- Use primary keys, foreign keys, constraints, and parameterized application queries.
-- Make migrations repeatable or clearly document their required execution order.
-- Keep seed records fictional.
+They still use the repository's lowercase `snake_case` convention and its
+configured `moffat_bay` database, and remain useful for understanding the
+original schema design and constraints.
 
