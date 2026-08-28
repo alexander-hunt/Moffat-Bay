@@ -1,0 +1,36 @@
+erDiagram
+    CUSTOMER ||--o{ RESERVATION : places
+    ROOM_TYPE ||--o{ RESERVATION : selected_for
+
+    CUSTOMER {
+        BIGINT customer_id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email UK
+        VARCHAR telephone
+        VARCHAR password_hash
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    ROOM_TYPE {
+        SMALLINT room_type_id PK
+        VARCHAR room_name UK
+        VARCHAR room_size
+        SMALLINT max_guests
+        DECIMAL current_nightly_rate
+        BOOLEAN active
+    }
+
+    RESERVATION {
+        BIGINT reservation_id PK
+        BIGINT customer_id FK
+        SMALLINT room_type_id FK
+        SMALLINT guest_count
+        DATE check_in_date
+        DATE check_out_date
+        SMALLINT number_of_nights
+        DECIMAL nightly_rate
+        DECIMAL total_cost
+        DATETIME confirmed_at
+    }
