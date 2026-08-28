@@ -5,7 +5,8 @@ These files are kept as reference documentation for the approved `CUSTOMER`,
 them: schema is managed by Flask-Migrate/Alembic revisions generated from
 `moffat_bay/models.py`, and development data is loaded by the `flask init-db`
 CLI command (see `moffat_bay/seeds.py`). See `docs/DEVELOPMENT.md` for the
-current setup steps.
+current setup steps, including `scripts/setup_databases.py` for local database
+provisioning.
 
 They still use the repository's lowercase `snake_case` convention and its
 configured `moffat_bay` database, and remain useful for understanding the

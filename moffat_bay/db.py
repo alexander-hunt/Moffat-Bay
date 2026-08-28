@@ -2,6 +2,11 @@
 
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from pymysql import err as pymysql_err
+
+# MySQL reports CHECK violations as error 3819, which PyMySQL does not map
+# to its integrity-error family by default.
+pymysql_err.error_map[3819] = pymysql_err.IntegrityError
 
 db = SQLAlchemy()
 migrate = Migrate()

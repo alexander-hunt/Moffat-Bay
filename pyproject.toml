@@ -2,6 +2,9 @@
 testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-ra"
+markers = [
+	"database: requires a disposable MySQL database configured by TEST_DATABASE_URL",
+]
 
 [tool.ruff]
 target-version = "py312"

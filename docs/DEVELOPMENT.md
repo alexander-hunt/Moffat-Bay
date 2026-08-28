@@ -22,18 +22,24 @@ overwrites an existing `.env`.
 
 Edit `.env` with local MySQL Community Server 8.4 LTS values. Do not commit it.
 
-Database-backed features require a running MySQL server and a configured application database.
-Create the empty database once, then apply migrations and load fictional development data:
+Database-backed features require a running MySQL server and configured application connection
+values. Set `MYSQL_ROOT_PASSWORD` in the operating-system environment, then provision both the
+development and disposable test databases:
 
 ```bash
-mysql -u root -p < database/migrations/000_create_database.sql
-flask db upgrade
-flask init-db
+python scripts/setup_databases.py
 ```
 
-`flask init-db` applies any pending Alembic migrations and (re)loads the fixed development
-dataset; it is safe to run again. Use `flask db migrate -m "message"` after changing models in
-`moffat_bay/models.py`, then `flask db upgrade` to apply the new revision.
+On Windows PowerShell, set `$env:MYSQL_ROOT_PASSWORD` for the current session before running the
+script. It creates the configured application database and `moffat_bay_test` if needed, grants
+the configured `MYSQL_USER` access to both, applies pending Alembic migrations, and (re)loads the
+fixed fictional development dataset. Re-running it is safe: it does not drop databases or tables.
+
+The helper writes `TEST_DATABASE_URL` to the ignored `.env` file. It must target the disposable
+`moffat_bay_test` database; database-marked pytest tests use it and clear their data after every
+test. Never configure this URL for production data. Use `flask db migrate -m "message"` after
+changing models in `moffat_bay/models.py`, then rerun `python scripts/setup_databases.py` to apply
+the new revision locally.
 
 ## Daily development
 
@@ -47,7 +53,10 @@ python scripts/validate.py
 
 The validation gate runs Ruff linting, Ruff formatting verification, and the full pytest suite in that order. It stops at the first failing check.
 
-The automated gate does not require MySQL: it validates the application factory and test-client coverage without live database access. In a configured local database environment, separately run `flask db-ping`, `flask db upgrade`, and `flask init-db` when validating connectivity, migrations, or development seed data.
+Without `TEST_DATABASE_URL`, database-marked tests are skipped, so the automated gate does not
+require MySQL by default. After `python scripts/setup_databases.py` configures the disposable test
+database, `python scripts/validate.py` includes those integration tests. In a configured local
+database environment, run `flask db-ping` to separately confirm application connectivity.
 
 Ruff can automatically fix safe lint issues with `python -m ruff check . --fix` and formatting drift with `python -m ruff format .`; review all resulting changes before committing.
 
