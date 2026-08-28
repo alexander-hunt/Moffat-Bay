@@ -25,15 +25,16 @@ The script never overwrites an existing `.env` file. Activate the environment af
 source .venv/bin/activate
 
 # Windows PowerShell
-.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 ```
 
 ## `setup_databases.py`
 
 Creates the configured local application database and the disposable `moffat_bay_test`
-database when they do not already exist. It grants the configured `MYSQL_USER` access to both
-databases, applies all Alembic migrations, and reloads the fictional development seed data.
-The test database remains empty for pytest to isolate its database tests.
+database when they do not already exist. When `MYSQL_USER` is not `root`, it creates that local
+account if needed and grants it access to both databases. It applies all Alembic migrations and
+reloads the fictional development seed data. The test database remains empty for pytest to
+isolate its database tests.
 
 Set `MYSQL_ROOT_PASSWORD` in the operating-system environment before running the script. The
 password is used only to provision local MySQL databases and accounts; it is not written to

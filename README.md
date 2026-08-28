@@ -24,7 +24,7 @@ flask --app run.py run --debug
 ```
 
 On Windows, start the script with `py -3.12 scripts/bootstrap.py`, activate with
-`.venv\Scripts\activate`, set `$env:MYSQL_ROOT_PASSWORD` for the current PowerShell session,
+`.\.venv\Scripts\Activate.ps1`, set `$env:MYSQL_ROOT_PASSWORD` for the current PowerShell session,
 and run `py -3.12 scripts/setup_databases.py`.
 
 Open `http://127.0.0.1:5000/` in a browser. The page should load as the Moffat Bay Lodge home page. You can also verify the health endpoint at `http://127.0.0.1:5000/health`, which should return:

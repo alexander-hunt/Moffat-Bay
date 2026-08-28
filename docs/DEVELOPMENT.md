@@ -14,7 +14,7 @@ source .venv/bin/activate
 ```
 
 On Windows, start the script with `py -3.12 scripts/bootstrap.py` and activate with
-`.venv\Scripts\activate`.
+`.\.venv\Scripts\Activate.ps1`.
 
 The script creates `.venv`, upgrades pip, installs `requirements-dev.txt`, and copies
 `.env.example` to `.env` when that file does not already exist. Re-running it is safe and never
@@ -31,9 +31,10 @@ python scripts/setup_databases.py
 ```
 
 On Windows PowerShell, set `$env:MYSQL_ROOT_PASSWORD` for the current session before running the
-script. It creates the configured application database and `moffat_bay_test` if needed, grants
-the configured `MYSQL_USER` access to both, applies pending Alembic migrations, and (re)loads the
-fixed fictional development dataset. Re-running it is safe: it does not drop databases or tables.
+script. It creates the configured application database and `moffat_bay_test` if needed, creates
+and grants a non-root configured `MYSQL_USER` access to both, applies pending Alembic migrations,
+and (re)loads the fixed fictional development dataset. Re-running it is safe: it does not drop
+databases or tables.
 
 The helper writes `TEST_DATABASE_URL` to the ignored `.env` file. It must target the disposable
 `moffat_bay_test` database; database-marked pytest tests use it and clear their data after every
