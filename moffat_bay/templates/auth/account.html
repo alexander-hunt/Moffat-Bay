@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Account | Moffat Bay Lodge{% endblock %}
+
+{% block content %}
+  <section class="account-page" aria-labelledby="account-title">
+    <div class="account-intro">
+      <p class="eyebrow">Guest account</p>
+      <h1 id="account-title">Plan your stay at Moffat Bay.</h1>
+      <p>Sign in to your lodge account or create one before booking your vacation.</p>
+    </div>
+    <div class="account-panels">
+      <section class="account-panel" aria-labelledby="login-title">
+        <h2 id="login-title">Log in</h2>
+        <p>Welcome back.</p>
+        <form action="{{ url_for('auth.login') }}" method="post" novalidate>
+          {{ login_form.hidden_tag() }}
+          <div class="form-field">
+            {{ login_form.email.label }}
+            {{ login_form.email(autocomplete="email") }}
+            {% for error in login_form.email.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+          </div>
+          <div class="form-field">
+            {{ login_form.password.label }}
+            {{ login_form.password(autocomplete="current-password") }}
+            {% for error in login_form.password.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+          </div>
+          {{ login_form.submit() }}
+        </form>
+      </section>
+      <section class="account-panel" aria-labelledby="register-title">
+        <h2 id="register-title">Create an account</h2>
+        <p>Register to begin planning your stay.</p>
+        <form action="{{ url_for('auth.register') }}" method="post" novalidate>
+          {{ registration_form.hidden_tag() }}
+          {% for field in (registration_form.first_name, registration_form.last_name, registration_form.email, registration_form.telephone, registration_form.password, registration_form.confirm_password) %}
+            <div class="form-field">
+              {{ field.label }}
+              {{ field(autocomplete="new-password" if field.type == "PasswordField" else "") }}
+              {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+          {% endfor %}
+          {{ registration_form.submit() }}
+        </form>
+      </section>
+    </div>
+  </section>
+{% endblock %}

@@ -1,12 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}Moffat Bay Lodge — Project Setup{% endblock %}
+{% block title %}Moffat Bay Lodge | Joviedsa Island{% endblock %}
 
 {% block content %}
-  <section class="hero">
-    <p class="eyebrow">Joviedsa Island, Washington</p>
-    <h1>Moffat Bay Lodge</h1>
-    <p>Welcome.</p>
+  <section class="hero" id="stay">
+    <div class="hero-copy">
+      <p class="eyebrow">Joviedsa Island, Washington</p>
+      <h1>Find your place by the water.</h1>
+      <p class="hero-lede">A quiet lodge stay shaped by evergreen trails, open water, and the unhurried rhythm of island days.</p>
+      <a class="button button-primary" href="{{ url_for('auth.account') }}">Plan your stay</a>
+    </div>
+    <div class="hero-mark" aria-hidden="true">
+      <span>Moffat Bay</span>
+      <span>Est. 2026</span>
+    </div>
+  </section>
+  <section class="stay-section" aria-labelledby="stay-heading">
+    <div>
+      <p class="eyebrow">The lodge</p>
+      <h2 id="stay-heading">A starting point for island days.</h2>
+    </div>
+    <p>Settle in after a morning on the water, trade trail stories over dinner, and make each day entirely your own.</p>
+  </section>
+  <section class="island-section" id="island" aria-labelledby="island-heading">
+    <p class="eyebrow">Island guide</p>
+    <h2 id="island-heading">The bay is only the beginning.</h2>
+    <div class="activity-grid">
+      <article><h3>Hiking</h3><p>Forest paths and coastal overlooks close to the lodge.</p></article>
+      <article><h3>Kayaking</h3><p>Launch into protected coves and calm morning water.</p></article>
+      <article><h3>Whale watching</h3><p>Keep watch for the island's most remarkable visitors.</p></article>
+      <article><h3>Scuba diving</h3><p>Explore clear-water coves below the shoreline.</p></article>
+    </div>
   </section>
 {% endblock %}
 

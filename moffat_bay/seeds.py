@@ -1,4 +1,4 @@
-"""Idempotent fictional development data mirroring database/seeds/001_development_seed.sql."""
+"""Idempotent fictional development data for the Flask application."""
 
 from datetime import date, datetime
 
@@ -10,34 +10,42 @@ from .models import Customer, Reservation, RoomType
 ROOM_TYPES = [
     {
         "room_type_id": 1,
-        "room_name": "Double Full",
-        "room_size": "Two full beds",
-        "max_guests": 4,
-        "current_nightly_rate": "120.00",
+        "room_name": "Pinewood Studio",
+        "description": "Cozy room for 1 or 2. Some views of Joviedsa forest area.",
+        "max_guests": 2,
+        "current_nightly_rate": "145.00",
         "active": True,
     },
     {
         "room_type_id": 2,
-        "room_name": "Queen",
-        "room_size": "One queen bed",
-        "max_guests": 2,
-        "current_nightly_rate": "135.00",
+        "room_name": "Alder Suite",
+        "description": (
+            "Large bedroom with open entertainment room. Amazing views of the Puget Sound."
+        ),
+        "max_guests": 5,
+        "current_nightly_rate": "195.00",
         "active": True,
     },
     {
         "room_type_id": 3,
-        "room_name": "Double Queen",
-        "room_size": "Two queen beds",
-        "max_guests": 4,
-        "current_nightly_rate": "150.00",
+        "room_name": "Maple Cabin",
+        "description": (
+            "3 bedrooms and a spacious family room. Direct access to Joviedsa hiking "
+            "trails and canoeing access to the Puget Sound."
+        ),
+        "max_guests": 6,
+        "current_nightly_rate": "245.00",
         "active": True,
     },
     {
         "room_type_id": 4,
-        "room_name": "King",
-        "room_size": "One king bed",
-        "max_guests": 2,
-        "current_nightly_rate": "160.00",
+        "room_name": "Douglas Fir Outpost",
+        "description": (
+            "Ultimate Family Retreat. Large private cabin with 5 bedrooms, family room, "
+            "game room, seating areas indoors/outdoors."
+        ),
+        "max_guests": 10,
+        "current_nightly_rate": "495.00",
         "active": True,
     },
 ]

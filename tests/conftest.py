@@ -16,6 +16,7 @@ from moffat_bay.db import db
 class TestConfig(Config):
     TESTING = True
     SECRET_KEY = "test-only-secret"
+    WTF_CSRF_ENABLED = False
 
 
 def test_database_url() -> str:
