@@ -4,13 +4,43 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Moffat Bay Lodge{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="{{ url_for('public.index') }}">Moffat Bay Lodge</a>
+      <a class="brand" href="{{ url_for('public.index') }}" aria-label="Moffat Bay Lodge home">
+        <img src="{{ url_for('static', filename='images/logo-concept.jpg') }}" alt="Moffat Bay Lodge">
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="{{ url_for('public.index') }}#stay">Stay</a>
+        <a href="{{ url_for('public.index') }}#island">Island guide</a>
+        {% if session.get('customer_id') %}
+          <form action="{{ url_for('auth.logout') }}" method="post">
+            <button class="nav-button" type="submit">Log out</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('auth.account') }}">Log in</a>
+          <a class="nav-cta" href="{{ url_for('auth.account') }}">Create account</a>
+        {% endif %}
+      </nav>
     </header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack" aria-live="polite">
+          {% for category, message in messages %}
+            <p class="flash flash-{{ category }}">{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
     <main>{% block content %}{% endblock %}</main>
+    <footer class="site-footer">
+      <p>Moffat Bay Lodge</p>
+      <p>Joviedsa Island, Washington</p>
+    </footer>
   </body>
 </html>
 

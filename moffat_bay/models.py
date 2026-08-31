@@ -1,4 +1,4 @@
-"""SQLAlchemy models mirroring database/migrations/001_create_erd_schema.sql."""
+"""SQLAlchemy models."""
 
 from sqlalchemy import CheckConstraint, UniqueConstraint, func
 
@@ -44,7 +44,7 @@ class RoomType(db.Model):
 
     room_type_id = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     room_name = db.Column(db.String(100), nullable=False)
-    room_size = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
     max_guests = db.Column(db.SmallInteger, nullable=False)
     current_nightly_rate = db.Column(db.Numeric(10, 2), nullable=False)
     active = db.Column(db.Boolean, nullable=False, default=True)
@@ -57,7 +57,8 @@ class RoomType(db.Model):
             "CHAR_LENGTH(TRIM(room_name)) > 0", name="chk_room_type_room_name_not_blank"
         ),
         CheckConstraint(
-            "CHAR_LENGTH(TRIM(room_size)) > 0", name="chk_room_type_room_size_not_blank"
+            "CHAR_LENGTH(TRIM(description)) > 0",
+            name="chk_room_type_description_not_blank",
         ),
         CheckConstraint("max_guests > 0", name="chk_room_type_max_guests_positive"),
         CheckConstraint("current_nightly_rate > 0", name="chk_room_type_rate_positive"),

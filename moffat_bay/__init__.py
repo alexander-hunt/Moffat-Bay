@@ -15,9 +15,11 @@ def create_app(config_object: type[Config] = Config) -> Flask:
     register_cli(app)
 
     from . import models  # noqa: F401 register models with SQLAlchemy metadata
+    from .auth import auth_bp
     from .public import public_bp
 
     app.register_blueprint(public_bp)
+    app.register_blueprint(auth_bp)
 
     @app.get("/health")
     def health():

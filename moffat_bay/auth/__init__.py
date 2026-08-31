@@ -1,1 +1,7 @@
-"""Authentication feature package reserved for TD-04 and TD-06."""
+"""Authentication routes and session behavior."""
+
+from flask import Blueprint
+
+auth_bp = Blueprint("auth", __name__)
+
+from . import routes  # noqa: E402, F401 register blueprint routes

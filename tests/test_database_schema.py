@@ -28,7 +28,7 @@ def make_customer(**changes):
 def make_room_type(**changes):
     values = {
         "room_name": "Queen",
-        "room_size": "One queen bed",
+        "description": "One queen bed",
         "max_guests": 2,
         "current_nightly_rate": Decimal("135.00"),
         "active": True,
