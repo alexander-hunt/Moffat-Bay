@@ -1,4 +1,4 @@
-"""SQLAlchemy models mirroring database/migrations/001_create_erd_schema.sql."""
+"""SQLAlchemy models."""
 
 from sqlalchemy import CheckConstraint, UniqueConstraint, func
 
