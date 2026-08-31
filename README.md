@@ -2,6 +2,43 @@
 
 Capstone project for a lodge reservation application built with Flask and MySQL.
 
+## Project structure
+
+The running application starts at [run.py](run.py), which creates the Flask application through
+the `moffat_bay` application factory. It uses feature-oriented Flask blueprints, SQLAlchemy
+models, and Alembic migrations. Development quality checks use Ruff and pytest.
+
+| Path | Purpose |
+| --- | --- |
+| [moffat_bay/](moffat_bay/) | Active Flask application package. [config.py](moffat_bay/config.py) loads environment-based configuration; [db.py](moffat_bay/db.py) configures SQLAlchemy and Flask-Migrate; [models.py](moffat_bay/models.py) defines the current data model; [cli.py](moffat_bay/cli.py) and [seeds.py](moffat_bay/seeds.py) provide database commands and fictional development data. |
+| [moffat_bay/public/](moffat_bay/public/) | Public home-page and health-check routes. |
+| [moffat_bay/auth/](moffat_bay/auth/) | Registration, login, logout, session helpers, and forms. |
+| [moffat_bay/reservations/](moffat_bay/reservations/) | Ownership boundary for the future room-selection and reservation workflow; it does not currently expose application routes. |
+| [moffat_bay/templates/](moffat_bay/templates/) | Jinja templates; feature templates extend [base.html](moffat_bay/templates/base.html). |
+| [moffat_bay/static/](moffat_bay/static/) | Browser assets: CSS, JavaScript, and images. |
+| [migrations/](migrations/) | Alembic migration environment and versioned schema revisions. Use this directory and `models.py` for active schema changes. |
+| [scripts/](scripts/) | Cross-platform bootstrap, MySQL provisioning, and validation automation. |
+| [tests/](tests/) | Pytest smoke, authentication, schema, seed/CLI, and script tests. |
+| [docs/](docs/) | Development guide, contribution standards, and architecture decision records. |
+| [.github/](.github/) | GitHub Actions CI, code-owner rules, issue templates, and pull-request template. |
+| [pyproject.toml](pyproject.toml), [requirements.txt](requirements.txt), and [requirements-dev.txt](requirements-dev.txt) | Python tooling configuration plus runtime and development dependency definitions. |
+| [.env.example](.env.example), [.editorconfig](.editorconfig), and [.gitignore](.gitignore) | Local environment template, shared formatting defaults, and excluded local/generated files. |
+
+### Reference material
+
+[archive/](archive/) preserves the original technical design document, ERD, wireframes, and other
+course artifacts. Its archived SQL migrations and seed files are historical reference only: the
+running application does not execute them. Current database work belongs in
+[moffat_bay/models.py](moffat_bay/models.py) and [migrations/](migrations/); see the
+[archived database notes](archive/archived_database_files/README.md) for details.
+
+### Where to go next
+
+- [Development guide](docs/DEVELOPMENT.md): daily workflow, configuration, database setup, and troubleshooting.
+- [Contributing guide](docs/CONTRIBUTING.md): branch, review, code-quality, and security expectations.
+- [Persistence decision](docs/decisions/0003-sqlalchemy-alembic-persistence.md): rationale for SQLAlchemy, Flask-Migrate, and Alembic.
+- [Script reference](scripts/README.md): detailed behavior of the setup and validation scripts.
+
 ## Five-minute setup
 
 This quick path starts the public Flask application and verifies its smoke-test endpoints.
