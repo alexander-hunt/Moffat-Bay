@@ -50,9 +50,9 @@ a { color: inherit; }
 
 .hero-lede { font-size: 1.25rem; line-height: 1.55; max-width: 35rem; }
 
-.hero-mark { align-content: end; border: 1px solid var(--sage); display: grid; font-family: "Libre Baskerville", serif; gap: 0.5rem; justify-items: end; padding: 1.5rem; }
+.hero-mark { border: 1px solid var(--sage); min-height: 21rem; overflow: hidden; position: relative; }
 
-.hero-mark span:last-child { color: var(--sage); font: 600 0.85rem "Source Sans 3", sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+.hero-mark img { display: block; height: 100%; inset: 0; object-fit: cover; object-position: center 65%; position: absolute; width: 100%; }
 
 .eyebrow { color: var(--clay); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 

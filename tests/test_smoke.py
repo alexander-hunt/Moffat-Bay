@@ -5,6 +5,7 @@ def test_home_page_loads(client):
     response = client.get("/")
     assert response.status_code == 200
     assert b"Moffat Bay Lodge" in response.data
+    assert b"/static/images/hero-moffat-bay.jpg" in response.data
 
 
 def test_health_endpoint(client):
