@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Reservation Lookup | Moffat Bay Lodge{% endblock %}
+
+{% block content %}
+  <section class="account-page">
+    <div class="account-intro">
+      <p class="eyebrow">Your reservations</p>
+      <h1>Find a reservation</h1>
+      <p>Search using your reservation ID or your account email address.</p>
+    </div>
+    <section class="reservation-panel" aria-label="Reservation lookup">
+      <form action="{{ url_for('reservations.lookup') }}" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form-field">
+          {{ form.query.label }}
+          {{ form.query(autocomplete="email") }}
+          {% for error in form.query.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        {{ form.submit() }}
+      </form>
+    </section>
+    {% if reservations is not none %}
+      <section class="reservation-results" aria-live="polite">
+        {% if reservations %}
+          {% for reservation in reservations %}
+            <article class="reservation-panel reservation-details">
+              <p class="eyebrow">Reservation {{ reservation.reservation_id }}</p>
+              <h2>{{ reservation.room_type.room_name }}</h2>
+              <p>{{ reservation.guest_count }} guests | {{ reservation.check_in_date }} to {{ reservation.check_out_date }} | ${{ "%.2f"|format(reservation.total_cost) }}</p>
+            </article>
+          {% endfor %}
+        {% else %}
+          <p>No reservations matched that search.</p>
+        {% endif %}
+      </section>
+    {% endif %}
+  </section>
+{% endblock %}

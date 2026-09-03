@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Book Your Stay | Moffat Bay Lodge{% endblock %}
+
+{% block content %}
+  <section class="account-page">
+    <div class="account-intro">
+      <p class="eyebrow">Moffat Bay Lodge</p>
+      <h1>Book your stay</h1>
+      <p>Select your room, guest count, and travel dates to review your reservation.</p>
+    </div>
+    <section class="reservation-panel" aria-labelledby="booking-form-title">
+      <h2 id="booking-form-title">Stay details</h2>
+      <form action="{{ url_for('reservations.review_booking') }}" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form-field">
+          {{ form.room_type_id.label }}
+          {{ form.room_type_id() }}
+          {% for error in form.room_type_id.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        <div class="form-field">
+          {{ form.guest_count.label }}
+          {{ form.guest_count(min="1", max="10") }}
+          {% for error in form.guest_count.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        <div class="form-field">
+          {{ form.check_in_date.label }}
+          {{ form.check_in_date() }}
+          {% for error in form.check_in_date.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        <div class="form-field">
+          {{ form.check_out_date.label }}
+          {{ form.check_out_date() }}
+          {% for error in form.check_out_date.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        {{ form.submit() }}
+      </form>
+    </section>
+  </section>
+{% endblock %}

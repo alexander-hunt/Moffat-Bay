@@ -15,9 +15,12 @@
           <img src="{{ url_for('static', filename='images/logo_concept4.png') }}" alt="Moffat Bay Lodge">
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
-        <a href="{{ url_for('public.index') }}#stay">Stay</a>
-        <a href="{{ url_for('public.index') }}#island">Island guide</a>
+        <a href="{{ url_for('public.about') }}">About</a>
+        <a href="{{ url_for('public.attractions') }}">Attractions</a>
+        <a href="{{ url_for('public.contact') }}">Contact</a>
         {% if session.get('customer_id') %}
+          <a href="{{ url_for('reservations.book') }}">Book</a>
+          <a href="{{ url_for('reservations.lookup') }}">My stays</a>
           <form action="{{ url_for('auth.logout') }}" method="post">
             <button class="nav-button" type="submit">Log out</button>
           </form>

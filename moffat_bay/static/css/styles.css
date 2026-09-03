@@ -68,6 +68,24 @@ a { color: inherit; }
 
 .island-section { background: var(--sage); max-width: none; padding-left: max(5vw, calc((100vw - 76rem) / 2)); padding-right: max(5vw, calc((100vw - 76rem) / 2)); }
 
+.text-link { font-weight: 700; }
+
+.content-page { margin: 0 auto; max-width: 76rem; padding: 5rem 5vw; }
+
+.content-page-intro { max-width: 48rem; }
+
+.content-page-intro h1 { font-size: clamp(2.25rem, 5vw, 4.25rem); line-height: 1.15; }
+
+.content-page-intro > p:last-child { font-size: 1.2rem; line-height: 1.55; }
+
+.content-grid, .contact-details { display: grid; gap: 1px; grid-template-columns: repeat(3, 1fr); margin-top: 3rem; }
+
+.content-grid section, .contact-details section { background: var(--white); min-height: 12rem; padding: 1.5rem; }
+
+.content-grid h2, .contact-details h2 { font-size: 1.3rem; }
+
+.attraction-grid { grid-template-columns: repeat(4, 1fr); }
+
 .activity-grid { display: grid; gap: 1px; grid-template-columns: repeat(4, 1fr); }
 
 .activity-grid article { background: var(--white); min-height: 12rem; padding: 1.5rem; }
@@ -88,11 +106,37 @@ a { color: inherit; }
 
 .account-panel h2 { font-size: 1.7rem; }
 
+.reservation-panel { background: var(--white); border-top: 5px solid var(--cedar); margin-top: 3rem; max-width: 42rem; padding: 2rem; }
+
+.reservation-panel h2 { font-size: 1.7rem; }
+
+.reservation-details dl { margin: 0; }
+
+.reservation-details dl > div { border-bottom: 1px solid var(--sage); display: flex; gap: 1rem; justify-content: space-between; padding: 0.7rem 0; }
+
+.reservation-details dt { font-weight: 700; }
+
+.reservation-details dd { margin: 0; text-align: right; }
+
+.reservation-details .reservation-total { border-bottom: 0; font-size: 1.2rem; padding-bottom: 0; }
+
+.reservation-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+
+.reservation-actions form { margin: 0; }
+
+.button, .button-secondary { border: 0; cursor: pointer; font: 700 1rem "Source Sans 3", sans-serif; min-height: 2.75rem; padding: 0.5rem 1rem; }
+
+.button-secondary { background: transparent; border: 1px solid var(--cedar); color: var(--cedar); }
+
+.reservation-results { margin-top: 3rem; max-width: 42rem; }
+
+.reservation-results .reservation-panel { margin-top: 1rem; }
+
 .form-field { display: grid; gap: 0.35rem; margin: 1rem 0; }
 
 .form-field label { font-weight: 700; }
 
-.form-field input { background: var(--white); border: 1px solid var(--muted); border-radius: 0; font: inherit; min-height: 2.75rem; padding: 0.45rem 0.6rem; width: 100%; }
+.form-field input, .form-field select { background: var(--white); border: 1px solid var(--muted); border-radius: 0; font: inherit; min-height: 2.75rem; padding: 0.45rem 0.6rem; width: 100%; }
 
 input[type="submit"] { background: var(--clay); border: 0; color: var(--white); cursor: pointer; font: 700 1rem "Source Sans 3", sans-serif; margin-top: 0.5rem; min-height: 2.75rem; padding: 0.5rem 1rem; }
 
@@ -105,10 +149,12 @@ input[type="submit"] { background: var(--clay); border: 0; color: var(--white); 
 @media (max-width: 700px) {
   .site-header { align-items: flex-start; gap: 1rem; }
   .site-nav { flex-wrap: wrap; gap: 0.65rem 1rem; justify-content: flex-end; }
-  .hero, .stay-section, .account-panels { grid-template-columns: 1fr; }
+  .hero, .stay-section, .account-panels, .content-grid, .contact-details, .attraction-grid { grid-template-columns: 1fr; }
   .hero { min-height: 0; padding-bottom: 3rem; padding-top: 4rem; }
   .hero-mark { min-height: 10rem; }
   .activity-grid { grid-template-columns: repeat(2, 1fr); }
+  .reservation-actions { align-items: stretch; flex-direction: column-reverse; }
+  .reservation-actions form, .reservation-actions button { width: 100%; }
   .site-footer { gap: 0.75rem; flex-direction: column; }
 }
 
