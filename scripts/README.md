@@ -70,3 +70,19 @@ python scripts/validate.py
 ```
 
 Run this command with the project's virtual environment activated.
+
+## `print_tables.py`
+
+Prints the contents of every table in the database selected by the existing `MYSQL_*`
+configuration. The output includes each table's column names and rows in a readable text format.
+Run it from the repository root:
+
+```bash
+python scripts/print_tables.py
+```
+
+On Windows PowerShell, use:
+
+```powershell
+py -3.12 scripts/print_tables.py
+```
