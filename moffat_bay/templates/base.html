@@ -18,6 +18,8 @@
         <a href="{{ url_for('public.index') }}#stay">Stay</a>
         <a href="{{ url_for('public.index') }}#island">Island guide</a>
         {% if session.get('customer_id') %}
+          <a href="{{ url_for('reservations.book') }}">Book</a>
+          <span class="nav-link-disabled" aria-disabled="true">My stays <span>Coming soon</span></span>
           <form action="{{ url_for('auth.logout') }}" method="post">
             <button class="nav-button" type="submit">Log out</button>
           </form>

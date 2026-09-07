@@ -37,6 +37,7 @@ running application does not execute them. Current database work belongs in
 - [Development guide](docs/DEVELOPMENT.md): daily workflow, configuration, database setup, and troubleshooting.
 - [Contributing guide](docs/CONTRIBUTING.md): branch, review, code-quality, and security expectations.
 - [Persistence decision](docs/decisions/0003-sqlalchemy-alembic-persistence.md): rationale for SQLAlchemy, Flask-Migrate, and Alembic.
+- [Development room catalog decision](docs/decisions/0004-development-room-catalog.md): approves the lodge-specific room types (Pinewood Studio at $145, Alder Suite at $195, Maple Cabin at $245, and Douglas Fir Outpost at $495 per night) and rates as the reservation catalog source of truth.
 - [Script reference](scripts/README.md): detailed behavior of the setup and validation scripts.
 
 ## Five-minute setup

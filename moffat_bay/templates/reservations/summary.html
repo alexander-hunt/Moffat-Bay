@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Reservation Summary | Moffat Bay Lodge{% endblock %}
+
+{% block content %}
+  <section class="account-page">
+    <div class="account-intro">
+      <p class="eyebrow">Reservation summary</p>
+      <h1>Review your stay</h1>
+      <p>Confirm when these details look right.</p>
+    </div>
+    <section class="reservation-panel reservation-details" aria-label="Pending reservation">
+      <dl>
+        <div><dt>Room</dt><dd>{{ reservation.room_type.room_name }}</dd></div>
+        <div><dt>Nightly rate</dt><dd>${{ "%.2f"|format(reservation.room_type.current_nightly_rate) }}</dd></div>
+        <div><dt>Guests</dt><dd>{{ reservation.guest_count }}</dd></div>
+        <div><dt>Check-in</dt><dd>{{ reservation.check_in_date.strftime("%B") }} {{ reservation.check_in_date.day }}, {{ reservation.check_in_date.year }}</dd></div>
+        <div><dt>Check-out</dt><dd>{{ reservation.check_out_date.strftime("%B") }} {{ reservation.check_out_date.day }}, {{ reservation.check_out_date.year }}</dd></div>
+        <div><dt>Nights</dt><dd>{{ reservation.number_of_nights }}</dd></div>
+        <div class="reservation-total"><dt>Total</dt><dd>${{ "%.2f"|format(reservation.total_cost) }}</dd></div>
+      </dl>
+      <div class="reservation-actions">
+        <form action="{{ url_for('reservations.cancel_booking') }}" method="post"><button class="button-secondary" type="submit">Cancel</button></form>
+        <form action="{{ url_for('reservations.confirm_booking') }}" method="post"><button class="button" type="submit">Confirm reservation</button></form>
+      </div>
+    </section>
+  </section>
+{% endblock %}

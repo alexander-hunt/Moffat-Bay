@@ -34,6 +34,10 @@ a { color: inherit; }
 
 .site-nav form { margin: 0; }
 
+.nav-link-disabled { color: var(--muted); cursor: not-allowed; font: 600 1rem "Source Sans 3", sans-serif; }
+
+.nav-link-disabled span { font-size: 0.75rem; }
+
 .nav-button { background: transparent; border: 0; color: var(--ink); cursor: pointer; padding: 0; }
 
 .nav-cta, .button { background: var(--clay); color: var(--white); display: inline-block; padding: 0.72rem 1.1rem; text-decoration: none; }
@@ -88,11 +92,33 @@ a { color: inherit; }
 
 .account-panel h2 { font-size: 1.7rem; }
 
+.reservation-panel { background: var(--white); border-top: 5px solid var(--cedar); margin-top: 3rem; max-width: 42rem; padding: 2rem; }
+
+.reservation-panel h2 { font-size: 1.7rem; }
+
+.reservation-details dl { margin: 0; }
+
+.reservation-details dl > div { border-bottom: 1px solid var(--sage); display: flex; gap: 1rem; justify-content: space-between; padding: 0.7rem 0; }
+
+.reservation-details dt { font-weight: 700; }
+
+.reservation-details dd { margin: 0; text-align: right; }
+
+.reservation-details .reservation-total { border-bottom: 0; font-size: 1.2rem; padding-bottom: 0; }
+
+.reservation-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+
+.reservation-actions form { margin: 0; }
+
+.button, .button-secondary { border: 0; cursor: pointer; font: 700 1rem "Source Sans 3", sans-serif; min-height: 2.75rem; padding: 0.5rem 1rem; }
+
+.button-secondary { background: transparent; border: 1px solid var(--cedar); color: var(--cedar); }
+
 .form-field { display: grid; gap: 0.35rem; margin: 1rem 0; }
 
 .form-field label { font-weight: 700; }
 
-.form-field input { background: var(--white); border: 1px solid var(--muted); border-radius: 0; font: inherit; min-height: 2.75rem; padding: 0.45rem 0.6rem; width: 100%; }
+.form-field input, .form-field select { background: var(--white); border: 1px solid var(--muted); border-radius: 0; font: inherit; min-height: 2.75rem; padding: 0.45rem 0.6rem; width: 100%; }
 
 input[type="submit"] { background: var(--clay); border: 0; color: var(--white); cursor: pointer; font: 700 1rem "Source Sans 3", sans-serif; margin-top: 0.5rem; min-height: 2.75rem; padding: 0.5rem 1rem; }
 
@@ -109,6 +135,8 @@ input[type="submit"] { background: var(--clay); border: 0; color: var(--white); 
   .hero { min-height: 0; padding-bottom: 3rem; padding-top: 4rem; }
   .hero-mark { min-height: 10rem; }
   .activity-grid { grid-template-columns: repeat(2, 1fr); }
+  .reservation-actions { align-items: stretch; flex-direction: column-reverse; }
+  .reservation-actions form, .reservation-actions button { width: 100%; }
   .site-footer { gap: 0.75rem; flex-direction: column; }
 }
 
