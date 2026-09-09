@@ -1,4 +1,4 @@
-# ADR 0005: Professor requirements update
+# ADR 0005: revised requirements salmon update
 
 - Status: Accepted
 - Date: 2026-09-09
