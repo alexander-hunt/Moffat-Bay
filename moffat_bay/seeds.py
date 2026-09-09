@@ -13,7 +13,7 @@ ROOM_TYPES = [
         "room_name": "Pinewood Studio",
         "description": "Cozy room for 1 or 2. Some views of Joviedsa forest area.",
         "max_guests": 2,
-        "current_nightly_rate": "145.00",
+        "current_nightly_rate": "152.25",
         "active": True,
     },
     {
@@ -23,7 +23,7 @@ ROOM_TYPES = [
             "Large bedroom with open entertainment room. Amazing views of the Puget Sound."
         ),
         "max_guests": 5,
-        "current_nightly_rate": "195.00",
+        "current_nightly_rate": "204.75",
         "active": True,
     },
     {
@@ -34,7 +34,7 @@ ROOM_TYPES = [
             "trails and canoeing access to the Puget Sound."
         ),
         "max_guests": 6,
-        "current_nightly_rate": "245.00",
+        "current_nightly_rate": "257.25",
         "active": True,
     },
     {
@@ -45,7 +45,7 @@ ROOM_TYPES = [
             "game room, seating areas indoors/outdoors."
         ),
         "max_guests": 10,
-        "current_nightly_rate": "495.00",
+        "current_nightly_rate": "519.75",
         "active": True,
     },
 ]

@@ -38,14 +38,14 @@ def test_development_seed_is_idempotent(database):
             "Pinewood Studio",
             "Cozy room for 1 or 2. Some views of Joviedsa forest area.",
             2,
-            Decimal("145.00"),
+            Decimal("152.25"),
             True,
         ),
         (
             "Alder Suite",
             "Large bedroom with open entertainment room. Amazing views of the Puget Sound.",
             5,
-            Decimal("195.00"),
+            Decimal("204.75"),
             True,
         ),
         (
@@ -53,7 +53,7 @@ def test_development_seed_is_idempotent(database):
             "3 bedrooms and a spacious family room. Direct access to Joviedsa hiking "
             "trails and canoeing access to the Puget Sound.",
             6,
-            Decimal("245.00"),
+            Decimal("257.25"),
             True,
         ),
         (
@@ -61,7 +61,7 @@ def test_development_seed_is_idempotent(database):
             "Ultimate Family Retreat. Large private cabin with 5 bedrooms, family room, "
             "game room, seating areas indoors/outdoors.",
             10,
-            Decimal("495.00"),
+            Decimal("519.75"),
             True,
         ),
     ]

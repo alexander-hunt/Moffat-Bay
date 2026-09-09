@@ -64,11 +64,15 @@ a { color: inherit; }
 
 .stay-section, .island-section { margin: 0 auto; max-width: 76rem; padding: 5rem 5vw; }
 
-.stay-section { display: grid; gap: 3rem; grid-template-columns: 1fr 1fr; }
+.stay-section { align-items: center; display: grid; gap: 3rem; grid-template-columns: 1fr 1fr; }
 
 .stay-section h2, .island-section h2 { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.2; }
 
-.stay-section > p { font-size: 1.35rem; line-height: 1.55; margin: 2.5rem 0 0; }
+.stay-lede { font-size: 1.35rem; line-height: 1.55; margin: 2.5rem 0 0; }
+
+.salmon-art { margin: 0; text-align: center; }
+
+.salmon-art img { height: auto; max-width: min(100%, 28rem); }
 
 .island-section { background: var(--sage); max-width: none; padding-left: max(5vw, calc((100vw - 76rem) / 2)); padding-right: max(5vw, calc((100vw - 76rem) / 2)); }
 

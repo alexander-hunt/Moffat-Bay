@@ -6,6 +6,8 @@ def test_home_page_loads(client):
     assert response.status_code == 200
     assert b"Moffat Bay Lodge" in response.data
     assert b"/static/images/hero-moffat-bay.jpg" in response.data
+    assert b"/static/images/SalishSalmonv2.png" in response.data
+    assert b"Salish salmon artwork in black on a transparent background" in response.data
 
 
 def test_health_endpoint(client):
