@@ -1,6 +1,6 @@
 # ADR 0004: Development room catalog overrides course rate table
 
-- Status: Accepted
+- Status: Superseded by [ADR 0005](0005-professor-requirements-update.md)
 - Date: 2026-09-03
 - Decision owner: Group B, led by Alexander Hunt
 
@@ -32,3 +32,6 @@ results, development data, and tests must derive room information and pricing fr
   match the original room catalog.
 - Any future change to the approved catalog requires an update to the seed data, relevant tests,
   and this decision record or a superseding ADR.
+
+This decision is retained as the historical record of the catalog that was previously in force.
+ADR 0005 supersedes its active room rates and related public-page requirements.
