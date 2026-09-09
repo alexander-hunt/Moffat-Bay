@@ -6,6 +6,18 @@ def test_home_page_loads(client):
     assert response.status_code == 200
     assert b"Moffat Bay Lodge" in response.data
     assert b"/static/images/hero-moffat-bay.jpg" in response.data
+    assert b"/static/images/SalishSalmonv2.png" in response.data
+    assert b"Salish salmon artwork in black on a transparent background" in response.data
+
+
+def test_about_page_loads_with_contact_details(client):
+    response = client.get("/about")
+
+    assert response.status_code == 200
+    assert b"About us" in response.data
+    assert b"248-880-7630" in response.data
+    assert b"stay@moffatbaylodge.example" in response.data
+    assert b"Joviedsa Island, Washington" in response.data
 
 
 def test_health_endpoint(client):
