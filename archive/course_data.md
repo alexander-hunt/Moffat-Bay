@@ -449,3 +449,25 @@ Review requirements, update the TDD and Kanban board, document external sources,
 - Prototype and mockup files are organized for submission.
 - The submission package is complete and the team is prepared to demonstrate primary workflows.
 - At least one teammate reviews completed work before cards move to Done.
+
+### TD-16: Revised Requirements and Salish Salmon Update
+
+| Field | Value |
+| --- | --- |
+| Priority | High |
+| Estimate | 6 hours |
+| Suggested owner | Whole Team |
+| Related stories | US-03, US-05, US-08, US-09 |
+
+Apply ADR 0005 to the active room catalog, public pages, reservation workflows, tests, and project documentation.
+
+**Acceptance criteria**
+
+- The active `RoomType` catalog uses the revised nightly rates: Pinewood Studio $152.25, Alder Suite $204.75, Maple Cabin $257.25, and Douglas Fir Outpost $519.75.
+- Reservation forms, summaries, confirmations, lookup results, development data, and tests derive room names and pricing from the current `RoomType` catalog rather than duplicating outdated rates.
+- Existing confirmed reservations retain their historical nightly rates and total costs after the catalog update.
+- The separate Contact Us page and public navigation link are removed.
+- The About Us page includes the lodge address, telephone number, and email address.
+- The landing page displays the Salish Salmon image from `archive\\SalishSalmonv2.png`.
+- Automated tests and development validation cover the revised rates, catalog-derived calculations, removed Contact Us route, About Us contact information, and landing-page image.
+- The ADR, course backlog, and related project documentation reflect the completed changes and identify any reused external assets or sources.
