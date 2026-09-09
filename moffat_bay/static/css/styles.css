@@ -82,6 +82,22 @@ a { color: inherit; }
 
 .activity-grid h3 { font-size: 1.3rem; }
 
+.content-page { margin: 0 auto; max-width: 76rem; padding: 5rem 5vw; }
+
+.content-page-intro { max-width: 42rem; }
+
+.content-page-intro h1 { font-size: clamp(2.25rem, 5vw, 4.25rem); line-height: 1.15; }
+
+.content-page-intro > p:last-child { font-size: 1.2rem; line-height: 1.5; }
+
+.content-grid, .contact-details { display: grid; gap: 1px; grid-template-columns: repeat(3, 1fr); margin-top: 3rem; }
+
+.content-grid section, .contact-details section { background: var(--white); border-top: 5px solid var(--cedar); padding: 2rem; }
+
+.content-grid h2, .contact-details h2 { font-size: 1.5rem; }
+
+.contact-details a { color: var(--clay); font-weight: 700; }
+
 .account-page { margin: 0 auto; max-width: 76rem; padding: 5rem 5vw; }
 
 .account-intro { max-width: 42rem; }
@@ -135,7 +151,7 @@ input[type="submit"] { background: var(--clay); border: 0; color: var(--white); 
 @media (max-width: 700px) {
   .site-header { align-items: flex-start; gap: 1rem; }
   .site-nav { flex-wrap: wrap; gap: 0.65rem 1rem; justify-content: flex-end; }
-  .hero, .stay-section, .account-panels { grid-template-columns: 1fr; }
+  .hero, .stay-section, .content-grid, .contact-details, .account-panels { grid-template-columns: 1fr; }
   .hero { min-height: 0; padding-bottom: 3rem; padding-top: 4rem; }
   .hero-mark { min-height: 10rem; }
   .activity-grid { grid-template-columns: repeat(2, 1fr); }

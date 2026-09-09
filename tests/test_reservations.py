@@ -135,7 +135,7 @@ def test_cancel_discards_pending_reservation_without_persisting(database, databa
 
 
 def test_summary_and_confirmation_create_one_customer_owned_reservation(database, database_app):
-    room_type = make_room()
+    room_type = make_room(room_name="Alder Suite", max_guests=5, nightly_rate="204.75")
     customer = make_customer()
     db.session.add_all([room_type, customer])
     db.session.commit()
@@ -148,12 +148,14 @@ def test_summary_and_confirmation_create_one_customer_owned_reservation(database
 
     reservation = Reservation.query.one()
     assert summary_response.status_code == 200
-    assert b"$405.00" in summary_response.data
+    assert b"$204.75" in summary_response.data
+    assert b"$614.25" in summary_response.data
     assert confirm_response.status_code == 302
     assert reservation.customer_id == customer.customer_id
     assert reservation.room_type_id == room_type.room_type_id
     assert reservation.number_of_nights == 3
-    assert reservation.total_cost == 405
+    assert reservation.nightly_rate == 204.75
+    assert reservation.total_cost == 614.25
 
     repeat_response = client.post("/reservations/confirm")
     assert repeat_response.status_code == 302
@@ -185,3 +187,30 @@ def test_confirmation_is_limited_to_the_signed_in_customer(database, database_ap
 
     assert response.status_code == 302
     assert response.headers["Location"].endswith("/reservations/book")
+
+
+def test_confirmation_displays_the_reservation_historical_nightly_rate(database, database_app):
+    room_type = make_room(room_name="Alder Suite", max_guests=5, nightly_rate="204.75")
+    customer = make_customer()
+    db.session.add_all([room_type, customer])
+    db.session.flush()
+    reservation = Reservation(
+        customer_id=customer.customer_id,
+        room_type_id=room_type.room_type_id,
+        guest_count=2,
+        check_in_date="2026-10-10",
+        check_out_date="2026-10-13",
+        number_of_nights=3,
+        nightly_rate="195.00",
+        total_cost="585.00",
+    )
+    db.session.add(reservation)
+    db.session.commit()
+    client = database_app.test_client()
+    log_in(client, customer)
+
+    response = client.get(f"/reservations/confirmation/{reservation.reservation_id}")
+
+    assert response.status_code == 200
+    assert b"$195.00" in response.data
+    assert b"$204.75" not in response.data

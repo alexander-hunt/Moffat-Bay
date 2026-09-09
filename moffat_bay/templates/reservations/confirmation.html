@@ -12,6 +12,7 @@
     <section class="reservation-panel reservation-details" aria-label="Confirmed reservation">
       <dl>
         <div><dt>Room</dt><dd>{{ reservation.room_type.room_name }}</dd></div>
+        <div><dt>Nightly rate</dt><dd>${{ "%.2f"|format(reservation.nightly_rate) }}</dd></div>
         <div><dt>Guests</dt><dd>{{ reservation.guest_count }}</dd></div>
         <div><dt>Check-in</dt><dd>{{ reservation.check_in_date }}</dd></div>
         <div><dt>Check-out</dt><dd>{{ reservation.check_out_date }}</dd></div>
