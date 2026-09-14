@@ -3,14 +3,15 @@
 from datetime import date
 from functools import wraps
 
-from flask import flash, redirect, render_template, session, url_for
+from flask import flash, redirect, render_template, request, session, url_for
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import joinedload
 
 from ..auth.helpers import CUSTOMER_SESSION_KEY
 from ..db import db
 from ..models import Customer, Reservation, RoomType
 from . import reservations_bp
-from .forms import ReservationForm
+from .forms import ReservationForm, ReservationLookupForm
 
 PENDING_RESERVATION_SESSION_KEY = "pending_reservation"
 
@@ -65,6 +66,39 @@ def pending_reservation_details():
 def current_customer():
     """Return the authenticated customer, if the session remains valid."""
     return db.session.get(Customer, session.get(CUSTOMER_SESSION_KEY))
+
+
+@reservations_bp.get("/stays")
+@login_required
+def stays():
+    """List or find confirmed reservations belonging to the signed-in customer."""
+    customer = current_customer()
+    if customer is None:
+        session.pop(CUSTOMER_SESSION_KEY, None)
+        flash("Please log in to view your stays.", "error")
+        return redirect(url_for("auth.account"))
+
+    form = ReservationLookupForm(formdata=request.args if request.args else None)
+    if request.args and not form.validate():
+        return (
+            render_template("reservations/stays.html", form=form, reservations=[], searched=True),
+            400,
+        )
+
+    query = Reservation.query.options(joinedload(Reservation.room_type)).filter_by(
+        customer_id=customer.customer_id
+    )
+    searched = bool(form.query.data)
+    if form.query.data:
+        if form.query.data.isdigit():
+            query = query.filter_by(reservation_id=int(form.query.data))
+        elif form.query.data.lower() != customer.email.lower():
+            query = query.filter(db.false())
+
+    reservations = query.order_by(Reservation.check_in_date, Reservation.reservation_id).all()
+    return render_template(
+        "reservations/stays.html", form=form, reservations=reservations, searched=searched
+    )
 
 
 @reservations_bp.get("/book")

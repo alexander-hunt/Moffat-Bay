@@ -1,8 +1,8 @@
 """Form definitions for reservation requests."""
 
 from flask_wtf import FlaskForm
-from wtforms import DateField, IntegerField, SelectField, SubmitField
-from wtforms.validators import DataRequired, NumberRange, ValidationError
+from wtforms import DateField, IntegerField, SelectField, StringField, SubmitField
+from wtforms.validators import DataRequired, Email, Length, NumberRange, Optional, ValidationError
 
 
 class ReservationForm(FlaskForm):
@@ -46,3 +46,30 @@ class ReservationForm(FlaskForm):
         if self.check_in_date.data is not None and field.data is not None:
             if field.data <= self.check_in_date.data:
                 raise ValidationError("Check-out must be after check-in.")
+
+
+class ReservationLookupForm(FlaskForm):
+    """Collect an optional reservation ID or account email lookup."""
+
+    class Meta:
+        csrf = False
+
+    query = StringField("Reservation ID or email address", validators=[Optional(), Length(max=254)])
+    submit = SubmitField("Find stays")
+
+    def validate_query(self, field):
+        """Accept a positive reservation ID or a valid email address."""
+        field.data = field.data.strip()
+        if not field.data:
+            return
+        if field.data.isdigit():
+            if int(field.data) < 1:
+                raise ValidationError("Enter a positive reservation ID or a valid email address.")
+            return
+
+        try:
+            Email()(self, field)
+        except ValidationError as error:
+            raise ValidationError(
+                "Enter a positive reservation ID or a valid email address."
+            ) from error

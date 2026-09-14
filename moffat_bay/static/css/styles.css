@@ -34,10 +34,6 @@ a { color: inherit; }
 
 .site-nav form { margin: 0; }
 
-.nav-link-disabled { color: var(--muted); cursor: not-allowed; font: 600 1rem "Source Sans 3", sans-serif; }
-
-.nav-link-disabled span { font-size: 0.75rem; }
-
 .nav-button { background: transparent; border: 0; color: var(--ink); cursor: pointer; padding: 0; }
 
 .nav-cta, .button { background: var(--clay); color: var(--white); display: inline-block; padding: 0.72rem 1.1rem; text-decoration: none; }
@@ -115,6 +111,12 @@ a { color: inherit; }
 .reservation-panel { background: var(--white); border-top: 5px solid var(--cedar); margin-top: 3rem; max-width: 42rem; padding: 2rem; }
 
 .reservation-panel h2 { font-size: 1.7rem; }
+
+.reservation-list { display: grid; gap: 1.5rem; margin-top: 3rem; }
+
+.reservation-list .reservation-panel { margin-top: 0; }
+
+.lookup-message { margin-top: 3rem; }
 
 .reservation-details dl { margin: 0; }
 
