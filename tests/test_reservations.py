@@ -1,9 +1,14 @@
 """Reservation workflow tests."""
 
+from datetime import date, timedelta
+from decimal import Decimal
+
 import pytest
+from werkzeug.datastructures import MultiDict
 
 from moffat_bay.db import db
 from moffat_bay.models import Customer, Reservation, RoomType
+from moffat_bay.reservations.forms import ReservationLookupForm
 
 pytestmark = pytest.mark.database
 
@@ -33,6 +38,21 @@ def make_room(room_name="Queen", max_guests=2, nightly_rate="135.00", active=Tru
         max_guests=max_guests,
         current_nightly_rate=nightly_rate,
         active=active,
+    )
+
+
+def make_reservation(customer, room_type, check_in_date="2026-10-10", nightly_rate="135.00"):
+    """Build a confirmed reservation for lookup tests."""
+    check_in = date.fromisoformat(check_in_date)
+    return Reservation(
+        customer_id=customer.customer_id,
+        room_type_id=room_type.room_type_id,
+        guest_count=2,
+        check_in_date=check_in,
+        check_out_date=check_in + timedelta(days=3),
+        number_of_nights=3,
+        nightly_rate=nightly_rate,
+        total_cost=Decimal(nightly_rate) * 3,
     )
 
 
@@ -214,3 +234,105 @@ def test_confirmation_displays_the_reservation_historical_nightly_rate(database,
     assert response.status_code == 200
     assert b"$195.00" in response.data
     assert b"$204.75" not in response.data
+
+
+def test_stays_requires_login(client):
+    response = client.get("/reservations/stays")
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/account")
+
+
+def test_lookup_form_accepts_reservation_id_when_csrf_is_enabled(app):
+    app.config["WTF_CSRF_ENABLED"] = True
+    with app.test_request_context("/reservations/stays?query=6"):
+        form = ReservationLookupForm(formdata=MultiDict({"query": "6"}))
+
+        assert form.validate()
+
+
+def test_stays_lists_customer_reservations_in_date_order_and_uses_historical_prices(
+    database, database_app
+):
+    room_type = make_room(room_name="Alder Suite", max_guests=5, nightly_rate="204.75")
+    customer = make_customer()
+    other_customer = make_customer(email="other@example.com")
+    db.session.add_all([room_type, customer, other_customer])
+    db.session.flush()
+    later_reservation = make_reservation(customer, room_type, check_in_date="2026-11-10")
+    earlier_reservation = make_reservation(
+        customer, room_type, check_in_date="2026-10-10", nightly_rate="195.00"
+    )
+    other_reservation = make_reservation(other_customer, room_type)
+    db.session.add_all([later_reservation, earlier_reservation, other_reservation])
+    db.session.commit()
+    client = database_app.test_client()
+    log_in(client, customer)
+
+    response = client.get("/reservations/stays")
+
+    assert response.status_code == 200
+    assert b"My stays" in response.data
+    assert b"Coming soon" not in response.data
+    assert response.data.index(str(earlier_reservation.reservation_id).encode()) < (
+        response.data.index(str(later_reservation.reservation_id).encode())
+    )
+    assert f"<h2>Reservation {other_reservation.reservation_id}</h2>".encode() not in response.data
+    assert b"$195.00" in response.data
+    assert b"$204.75" not in response.data
+
+
+def test_stays_filters_by_reservation_id_or_normalized_account_email(database, database_app):
+    room_type = make_room()
+    customer = make_customer()
+    db.session.add_all([room_type, customer])
+    db.session.flush()
+    first_reservation = make_reservation(customer, room_type, check_in_date="2026-10-10")
+    second_reservation = make_reservation(customer, room_type, check_in_date="2026-11-10")
+    db.session.add_all([first_reservation, second_reservation])
+    db.session.commit()
+    client = database_app.test_client()
+    log_in(client, customer)
+
+    id_response = client.get(f"/reservations/stays?query={first_reservation.reservation_id}")
+    email_response = client.get("/reservations/stays?query=%20MAYA%40EXAMPLE.COM%20")
+    first_heading = f"<h2>Reservation {first_reservation.reservation_id}</h2>".encode()
+    second_heading = f"<h2>Reservation {second_reservation.reservation_id}</h2>".encode()
+
+    assert first_heading in id_response.data
+    assert second_heading not in id_response.data
+    assert b"No confirmed stays match that lookup." not in id_response.data
+    assert first_heading in email_response.data
+    assert second_heading in email_response.data
+
+
+def test_stays_rejects_invalid_lookup_and_hides_other_customers_reservations(
+    database, database_app
+):
+    room_type = make_room()
+    customer = make_customer()
+    other_customer = make_customer(email="other@example.com")
+    db.session.add_all([room_type, customer, other_customer])
+    db.session.flush()
+    other_reservation = make_reservation(other_customer, room_type)
+    db.session.add(other_reservation)
+    db.session.commit()
+    client = database_app.test_client()
+    log_in(client, customer)
+
+    invalid_response = client.get("/reservations/stays?query=not-a-lookup")
+    foreign_id_response = client.get(
+        f"/reservations/stays?query={other_reservation.reservation_id}"
+    )
+    foreign_email_response = client.get("/reservations/stays?query=other%40example.com")
+
+    assert invalid_response.status_code == 400
+    assert b"Enter a positive reservation ID or a valid email address." in invalid_response.data
+    assert foreign_id_response.status_code == 200
+    assert foreign_email_response.status_code == 200
+    assert b"No confirmed stays match that lookup." in foreign_id_response.data
+    assert b"No confirmed stays match that lookup." in foreign_email_response.data
+    assert (
+        f"<h2>Reservation {other_reservation.reservation_id}</h2>".encode()
+        not in foreign_id_response.data
+    )

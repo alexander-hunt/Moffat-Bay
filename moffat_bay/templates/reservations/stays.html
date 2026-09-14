@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}My Stays | Moffat Bay Lodge{% endblock %}
+
+{% block content %}
+  <section class="account-page" aria-labelledby="stays-title">
+    <div class="account-intro">
+      <p class="eyebrow">Guest account</p>
+      <h1 id="stays-title">My stays</h1>
+      <p>Find a confirmed reservation by its ID or your account email address.</p>
+    </div>
+    <section class="reservation-panel" aria-labelledby="lookup-title">
+      <h2 id="lookup-title">Find a stay</h2>
+      <form action="{{ url_for('reservations.stays') }}" method="get" novalidate>
+        <div class="form-field">
+          {{ form.query.label }}
+          {{ form.query(autocomplete="email") }}
+          {% for error in form.query.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        {{ form.submit() }}
+      </form>
+    </section>
+    {% if reservations %}
+      <div class="reservation-list" aria-label="Confirmed reservations">
+        {% for reservation in reservations %}
+          <section class="reservation-panel reservation-details" aria-label="Reservation {{ reservation.reservation_id }}">
+            <h2>Reservation {{ reservation.reservation_id }}</h2>
+            <dl>
+              <div><dt>Room</dt><dd>{{ reservation.room_type.room_name }}</dd></div>
+              <div><dt>Nightly rate</dt><dd>${{ "%.2f"|format(reservation.nightly_rate) }}</dd></div>
+              <div><dt>Guests</dt><dd>{{ reservation.guest_count }}</dd></div>
+              <div><dt>Check-in</dt><dd>{{ reservation.check_in_date.strftime("%B") }} {{ reservation.check_in_date.day }}, {{ reservation.check_in_date.year }}</dd></div>
+              <div><dt>Check-out</dt><dd>{{ reservation.check_out_date.strftime("%B") }} {{ reservation.check_out_date.day }}, {{ reservation.check_out_date.year }}</dd></div>
+              <div><dt>Nights</dt><dd>{{ reservation.number_of_nights }}</dd></div>
+              <div class="reservation-total"><dt>Total</dt><dd>${{ "%.2f"|format(reservation.total_cost) }}</dd></div>
+            </dl>
+          </section>
+        {% endfor %}
+      </div>
+    {% elif searched %}
+      <p class="lookup-message">No confirmed stays match that lookup.</p>
+    {% else %}
+      <p class="lookup-message">You do not have any confirmed stays yet.</p>
+    {% endif %}
+  </section>
+{% endblock %}
