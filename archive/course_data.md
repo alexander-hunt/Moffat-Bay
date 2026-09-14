@@ -150,7 +150,7 @@ Combine all screenshots in one Word document that includes your name, date, and 
 | 5 | Landing page and backend code; Login page and backend code; User Registration page and backend code; update Kanban board. |
 | 6 | Room Reservation page and backend code; update Kanban board. |
 | 7 | About Us page and backend code; Reservation Summary page and backend code; update Kanban board. |
-| 8 | Contact Us page and backend code; Reservation Lookup page and backend code; update Kanban board. |
+| 8 | Reservation Lookup page and backend code; update Kanban board. |
 | 9 | Attractions page and backend code; update Kanban board. |
 
 ## Project To-Do Reference
