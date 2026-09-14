@@ -16,6 +16,7 @@ def test_about_page_loads_with_contact_details(client):
     assert response.status_code == 200
     assert b"About us" in response.data
     assert b"248-880-7630" in response.data
+    assert b"tel:+12488807630" in response.data
     assert b"stay@moffatbaylodge.example" in response.data
     assert b"Joviedsa Island, Washington" in response.data
 
