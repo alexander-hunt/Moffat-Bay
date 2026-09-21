@@ -16,7 +16,7 @@
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="{{ url_for('public.index') }}#stay">Stay</a>
-        <a href="{{ url_for('public.index') }}#island">Island guide</a>
+        <a href="{{ url_for('public.attractions') }}">Attractions</a>
         <a href="{{ url_for('public.about') }}">About us</a>
         {% if session.get('customer_id') %}
           <a href="{{ url_for('reservations.book') }}">Book</a>
