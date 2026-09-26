@@ -156,7 +156,7 @@ input[type="submit"] { background: var(--clay); border: 0; color: var(--white); 
   .hero, .stay-section, .content-grid, .contact-details, .account-panels { grid-template-columns: 1fr; }
   .hero { min-height: 0; padding-bottom: 3rem; padding-top: 4rem; }
   .hero-mark { min-height: 10rem; }
-  .activity-grid { grid-template-columns: repeat(2, 1fr); }
+  .activity-grid { grid-template-columns: 1fr; }
   .reservation-actions { align-items: stretch; flex-direction: column-reverse; }
   .reservation-actions form, .reservation-actions button { width: 100%; }
   .site-footer { gap: 0.75rem; flex-direction: column; }
