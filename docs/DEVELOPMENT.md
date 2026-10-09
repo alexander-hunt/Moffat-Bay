@@ -99,12 +99,9 @@ least-privilege `moffat_app` user, and keep the root password out of `.env` enti
 - ORM models live in `moffat_bay/models.py`; database automation CLI commands live in `moffat_bay/cli.py`.
 - Templates extend `base.html` so navigation and accessibility improvements remain consistent.
 
-Blueprints for `auth` and `reservations` should be registered only when those tasks add working routes. Avoid placeholder endpoints that imply incomplete features are available.
-
 ## Troubleshooting
 
 - `flask` is not recognized: activate `.venv` and reinstall `requirements-dev.txt`.
 - Imports fail: run commands from the repository root.
 - MySQL refuses the connection: verify the server is running and compare `.env` with the local user/database.
 - Port 5000 is busy: run `flask --app run.py run --debug --port 5001`.
-

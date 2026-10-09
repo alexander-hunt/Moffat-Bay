@@ -68,6 +68,7 @@ def test_registration_rejects_duplicate_email(database, database_app):
 
     assert response.status_code == 400
     assert b"An account already exists" in response.data
+    assert response.data.count(b'href="/account" aria-current="page"') == 2
 
 
 @pytest.mark.parametrize("field", ["first_name", "last_name", "email", "telephone", "password"])
@@ -103,6 +104,7 @@ def test_registration_rejects_invalid_email_and_password_confirmation(database, 
     assert response.status_code == 400
     assert b"Invalid email address." in response.data
     assert b"Field must be equal to password." in response.data
+    assert response.data.count(b'href="/account" aria-current="page"') == 2
 
 
 @pytest.mark.parametrize(
@@ -148,6 +150,7 @@ def test_login_rejects_invalid_credentials(database, database_app):
 
     assert response.status_code == 401
     assert b"Invalid email address or password." in response.data
+    assert response.data.count(b'href="/account" aria-current="page"') == 2
 
 
 def test_logout_clears_customer_session(database, database_app):
