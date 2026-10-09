@@ -89,6 +89,7 @@ def test_booking_renders_only_active_room_choices(database, database_app):
     assert response.status_code == 200
     assert b"King - $160.00 per night" in response.data
     assert b"Closed Cabin" not in response.data
+    assert b'href="/reservations/book" aria-current="page"' in response.data
 
 
 def test_booking_stores_server_calculated_pending_reservation(database, database_app):
@@ -135,6 +136,7 @@ def test_booking_rejects_invalid_stay_details(database, database_app, payload, e
 
     assert response.status_code == 400
     assert expected_error in response.data
+    assert b'href="/reservations/book" aria-current="page"' in response.data
 
 
 def test_cancel_discards_pending_reservation_without_persisting(database, database_app):
@@ -168,6 +170,7 @@ def test_summary_and_confirmation_create_one_customer_owned_reservation(database
 
     reservation = Reservation.query.one()
     assert summary_response.status_code == 200
+    assert b'href="/reservations/book" aria-current="page"' in summary_response.data
     assert b"$204.75" in summary_response.data
     assert b"$614.25" in summary_response.data
     assert confirm_response.status_code == 302
@@ -234,6 +237,7 @@ def test_confirmation_displays_the_reservation_historical_nightly_rate(database,
     assert response.status_code == 200
     assert b"$195.00" in response.data
     assert b"$204.75" not in response.data
+    assert b'href="/reservations/book" aria-current="page"' in response.data
 
 
 def test_stays_requires_login(client):
@@ -273,6 +277,7 @@ def test_stays_lists_customer_reservations_in_date_order_and_uses_historical_pri
 
     assert response.status_code == 200
     assert b"My stays" in response.data
+    assert b'href="/reservations/stays" aria-current="page"' in response.data
     assert b"Coming soon" not in response.data
     assert response.data.index(str(earlier_reservation.reservation_id).encode()) < (
         response.data.index(str(later_reservation.reservation_id).encode())
@@ -304,6 +309,8 @@ def test_stays_filters_by_reservation_id_or_normalized_account_email(database, d
     assert b"No confirmed stays match that lookup." not in id_response.data
     assert first_heading in email_response.data
     assert second_heading in email_response.data
+    for response in (id_response, email_response):
+        assert b'href="/reservations/stays" aria-current="page"' in response.data
 
 
 def test_stays_rejects_invalid_lookup_and_hides_other_customers_reservations(
@@ -327,6 +334,7 @@ def test_stays_rejects_invalid_lookup_and_hides_other_customers_reservations(
     foreign_email_response = client.get("/reservations/stays?query=other%40example.com")
 
     assert invalid_response.status_code == 400
+    assert b'href="/reservations/stays" aria-current="page"' in invalid_response.data
     assert b"Enter a positive reservation ID or a valid email address." in invalid_response.data
     assert foreign_id_response.status_code == 200
     assert foreign_email_response.status_code == 200

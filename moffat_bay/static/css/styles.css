@@ -2,7 +2,7 @@
   color-scheme: light;
   font-family: "Source Sans 3", sans-serif;
   color: #314d58;
-  background: #edebdf;
+  background: var(--background-sage);
   --ink: #314d58;
   --muted: #536269;
   --cedar: #775b46;
@@ -10,11 +10,15 @@
   --sage: #aebbb2;
   --paper: #edebdf;
   --white: #fffdf7;
+  --background-sage: #d8e6d8;
+  --background-sand: #efdfc3;
 }
 
 * { box-sizing: border-box; }
 
-body { margin: 0; background: var(--paper); }
+body { margin: 0; background: var(--background-sage); }
+
+main { background: var(--background-sage); background-image: linear-gradient(135deg, var(--background-sage), var(--background-sand)); }
 
 h1, h2, h3, p { margin-top: 0; }
 
@@ -31,6 +35,8 @@ a { color: inherit; }
 .site-nav { align-items: center; display: flex; gap: 1.25rem; }
 
 .site-nav a, .nav-button { font: 600 1rem "Source Sans 3", sans-serif; text-decoration: none; }
+
+.site-nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
 
 .site-nav form { margin: 0; }
 
@@ -161,4 +167,3 @@ input[type="submit"] { background: var(--clay); border: 0; color: var(--white); 
   .reservation-actions form, .reservation-actions button { width: 100%; }
   .site-footer { gap: 0.75rem; flex-direction: column; }
 }
-
